@@ -1,0 +1,58 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+  # Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+mqtt:
+  sensor:
+    - name: "Temperatur"
+      unique_id: temperature
+      state_topic: "home/hall/temperature"
+      unit_of_measurement: "°C"
+
+    - name: "Luftfeuchtigkeit"
+      unique_id: humidity
+      state_topic: "home/basement/humidity"
+      unit_of_measurement: "%"
+
+    - name: "Helligkeit"
+      unique_id: lightlevel
+      state_topic: "home/bedroom/lightlevel"
+      unit_of_measurement: "lx"
+
+  switch:
+    - name: "Licht"
+      unique_id: light
+      state_topic: "home/bedroom/light/state"
+      command_topic: "home/bedroom/light/set"
+      payload_on: "ON"
+      payload_off: "OFF"
+
+    - name: "Heizung"
+      unique_id: heater
+      state_topic: "home/hall/heater/state"
+      command_topic: "home/hall/heater/set"
+      payload_on: "ON"
+      payload_off: "OFF"
+
+    - name: "Ventilation"
+      unique_id: fan
+      state_topic: "home/basement/fan/state"
+      command_topic: "home/basement/fan/set"
+      payload_on: "ON"
+      payload_off: "OFF"
+  cover:
+    - name: "Fenster"
+      unique_id: window_cover
+      state_topic: "home/kitchen/blinds/state"
+      command_topic: "home/kitchen/blinds/set"
+      payload_open: "OPEN"
+      payload_close: "CLOSE"
+      state_open: "OPEN"
+      state_closed: "CLOSE"

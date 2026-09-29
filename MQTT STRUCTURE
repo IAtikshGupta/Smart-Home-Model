@@ -1,0 +1,60 @@
+home/bedroom/light/state
+home/bedroom/light/set
+
+home/basement/fan/state
+home/basement/fan/set
+
+home/hall/heater/state
+home/hall/heater/set
+
+home/kitchen/blinds/state
+home/kitchen/blinds/set
+
+SENSORS->
+home/hall/temperature
+home/basement/humidity
+home/bedroom/lightlevel
+home/kitchen/lightlevel
+
+
+
+IN2 -> ORANGE -> GPIO 5 -> Ventilation Fan
+IN3 -> GREEN  -> GPIO 6 -> Heater
+
+ENA -> BROWN -> GPIO 18 -> Blinds Motor
+IN1 -> BLACK -> GPIO 27 -> Blinds Motor
+IN2 -> WHITE -> GPIO 22 -> Blinds Motor
+
+OUT -> ORANGE -> GPIO 24 -> DHT11
+
+SDA -> GREEN -> GPIO 2 -> BH1750
+SCL -> WHITE -> GPIO 3 -> BH1750
+
++VE -> GREEN -> GPIO 25 -> LED
+
+
+'''def apply_automation(temp, hum, lux):
+    """Apply automation rules based on sensor data"""
+    # Example: Turn heater ON if temperature drops below 18°C
+    if temp is not None and temp < 18 and actuator_state["heater"] == "OFF":
+        print(f"[AUTO] Temp {temp}°C < 18°C → Heater ON")
+        heater_on()
+        actuator_state["heater"] = "ON"
+        client.publish("home/hall/heater/state", "ON")
+    elif temp is not None and temp > 22 and actuator_state["heater"] == "ON":
+        print(f"[AUTO] Temp {temp}°C > 22°C → Heater OFF")
+        heater_off()
+        actuator_state["heater"] = "OFF"
+        client.publish("home/hall/heater/state", "OFF")
+    
+    # Example: Turn light ON if light level drops below 100 lux
+    if lux is not None and lux < 100 and actuator_state["light"] == "OFF":
+        print(f"[AUTO] Light {lux} lux < 100 → Light ON")
+        light_on()
+        actuator_state["light"] = "ON"
+        client.publish("home/bedroom/light/state", "ON")
+    elif lux is not None and lux > 300 and actuator_state["light"] == "ON":
+        print(f"[AUTO] Light {lux} lux > 300 → Light OFF")
+        light_off()
+        actuator_state["light"] = "OFF"
+        client.publish("home/bedroom/light/state", "OFF")'''
